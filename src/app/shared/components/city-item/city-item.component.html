@@ -1,0 +1,7 @@
+<div class="city-row">
+  <input type="checkbox" class="city-checkbox">
+  <div>
+    <div class="name">{{ city.name }}</div>
+    <span class="country" [innerText]="city.subcountry? city.subcountry + ' - ' + city.country : city.country"></span>
+  </div>
+</div>
