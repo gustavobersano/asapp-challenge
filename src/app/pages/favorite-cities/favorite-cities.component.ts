@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { forkJoin, Observable } from 'rxjs';
+
+import { CityService } from 'src/app/shared/services/city.service';
+
 import { CityInfoView } from 'src/app/shared/models/city-info-view';
 import { CityList } from 'src/app/shared/models/city-list';
 import { PreferredCityList } from 'src/app/shared/models/preferred-city-list';
-
-import { CityService } from 'src/app/shared/services/city.service';
 
 @Component({
   selector: 'app-favorite-cities',
@@ -49,25 +50,6 @@ export class FavoriteCitiesComponent implements OnInit {
         console.log(responses);
       }
     );
-    /* Promise.all(promises).then(
-      reponses => {
-
-      }
-    ); */
-
-    /* this.cityService.getPreferredCities().subscribe(
-      response => {
-
-      }
-    ); */
-
-    /* this.cityService.getCityList('', this.limit, this.offset).subscribe(
-      response => {
-        this.cityListResponse = response;
-        this.cityListView = this.cityListResponse.data.map(city => { return { ...city, checked: false } });
-        console.log(response);
-      },
-    ) */
   }
 
 }
