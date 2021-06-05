@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { CityItemComponent } from './components/city-item/city-item.component';
 
@@ -10,10 +11,12 @@ import { CityItemComponent } from './components/city-item/city-item.component';
     CityItemComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule
   ],
   exports: [
-    CityItemComponent
+    CityItemComponent,
+    FormsModule
   ]
 })
 export class SharedModule { }
