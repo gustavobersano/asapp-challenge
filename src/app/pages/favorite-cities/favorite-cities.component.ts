@@ -12,7 +12,6 @@ import {
 import { CityService } from 'src/app/shared/services/city.service';
 
 import { CityInfoView } from 'src/app/shared/models/city-info-view';
-import { CityList } from 'src/app/shared/models/city-list';
 
 @Component({
   selector: 'app-favorite-cities',
@@ -32,12 +31,11 @@ export class FavoriteCitiesComponent implements OnInit, AfterViewInit {
 
   public preferredCityList: Array<number>;
 
-  public cityListResponse: CityList;
-
   constructor(private cityService: CityService) {
     this.limit = 10;
     this.offset = 0;
     this.filter = '';
+    this.cityListView = [];
     this.preferredCityList = [];
   }
 
@@ -46,7 +44,11 @@ export class FavoriteCitiesComponent implements OnInit, AfterViewInit {
       tap(preferredCityResponse => { this.preferredCityList = preferredCityResponse.data; }),
       mergeMap(() => this.getCityList(''))
     ).subscribe(
-      cityListView => this.cityListView = cityListView
+      cityListView => this.cityListView = cityListView,
+      error => {
+        // TODO: Inform error message
+          console.log(error)
+      }
     );
   }
 
@@ -58,7 +60,11 @@ export class FavoriteCitiesComponent implements OnInit, AfterViewInit {
         distinctUntilChanged(),
         switchMap(filterValue => this.getCityList(filterValue))
       ).subscribe(
-        res => this.cityListView = res
+        res => this.cityListView = res,
+        error => {
+          // TODO: Inform error message
+          console.log(error)
+        }
       );
   }
 
