@@ -4,4 +4,5 @@
   <li class="city-list-item" *ngFor="let city of cityListView">
     <app-city-item [city]="city"></app-city-item>
   </li>
+  <li class="no-items" *ngIf="cityListView.length === 0">No data matching the filter "{{filterInput.value}}"</li>
 </ul>

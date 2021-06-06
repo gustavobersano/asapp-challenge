@@ -1,4 +1,6 @@
 .title {
+  padding: 1rem 0;
+  margin: 0;
   text-align: center;
 }
 
@@ -24,5 +26,9 @@
 
   :not(:last-child).city-list-item {
     border-bottom: 1px solid gray;
+  }
+
+  .no-items {
+    padding: 16px;
   }
 }

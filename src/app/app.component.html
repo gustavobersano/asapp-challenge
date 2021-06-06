@@ -1,3 +1,4 @@
 <div class="main-container" role="main">
   <router-outlet></router-outlet>
 </div>
+<app-message-modal *ngIf="(messageModalService.isModalMessageVisible$ | async)"></app-message-modal>

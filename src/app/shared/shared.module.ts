@@ -3,12 +3,14 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { CityItemComponent } from './components/city-item/city-item.component';
+import { MessageModalComponent } from './components/message-modal/message-modal.component';
 
 
 
 @NgModule({
   declarations: [
-    CityItemComponent
+    CityItemComponent,
+    MessageModalComponent
   ],
   imports: [
     CommonModule,
@@ -16,6 +18,7 @@ import { CityItemComponent } from './components/city-item/city-item.component';
   ],
   exports: [
     CityItemComponent,
+    MessageModalComponent,
     FormsModule
   ]
 })
