@@ -10,6 +10,7 @@ import {
 } from 'rxjs/operators';
 
 import { CityService } from 'src/app/shared/services/city.service';
+import { MessageModalService } from 'src/app/shared/components/message-modal/message-modal.service';
 
 import { CityInfoView } from 'src/app/shared/models/city-info-view';
 
@@ -31,7 +32,9 @@ export class FavoriteCitiesComponent implements OnInit, AfterViewInit {
 
   public preferredCityList: Array<number>;
 
-  constructor(private cityService: CityService) {
+  constructor(
+    private cityService: CityService,
+    private messageModalService: MessageModalService) {
     this.limit = 10;
     this.offset = 0;
     this.filter = '';
@@ -44,12 +47,12 @@ export class FavoriteCitiesComponent implements OnInit, AfterViewInit {
       tap(preferredCityResponse => { this.preferredCityList = preferredCityResponse.data; }),
       mergeMap(() => this.getCityList(''))
     ).subscribe(
-      cityListView => this.cityListView = cityListView,
+      cityListView => { this.cityListView = cityListView; },
       error => {
-        // TODO: Inform error message
-          console.log(error)
+        this.messageModalService.show(error.error.error, error.error.message);
       }
     );
+    
   }
 
   ngAfterViewInit(): void {
@@ -62,8 +65,7 @@ export class FavoriteCitiesComponent implements OnInit, AfterViewInit {
       ).subscribe(
         res => this.cityListView = res,
         error => {
-          // TODO: Inform error message
-          console.log(error)
+          this.messageModalService.show(error.error.error, error.error.message);
         }
       );
   }
