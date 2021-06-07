@@ -5,7 +5,6 @@
     <app-city-item [city]="city" (updateFavoriteStatus)="updateFavoriteStatus($event, city)"></app-city-item>
   </li>
   <li *ngIf="!(loaderService.isLoading$ | async) && cityListView.length === 0" class="no-items">No data matching the filter "{{filterInput.value}}"</li>
-  <!-- <app-loader *ngIf="(loaderService.isLoading$ | async)"></app-loader> -->
-  <app-loader></app-loader>
+  <app-loader *ngIf="(loaderService.isLoading$ | async)"></app-loader>
 </ul>
 <app-paginator [navigationLinks]="navigationLinks" [total]="total" (onClickButton)="onClickButton($event)"></app-paginator>
