@@ -4,17 +4,24 @@
   text-align: center;
 }
 
-.filter {
-  box-sizing: border-box;
-  width: 100%;
-  padding: 16px 8px 16px 40px;
-  border: 2px solid black;
-  border-radius: 8px;
-  font-size: 1.15rem;
-  background-image: url('/assets/icons/filter-solid.svg');
-  background-repeat: no-repeat;
-  background-size: 20px 20px;
-  background-position: 8px center;
+.filter-container {
+  position: relative;
+  
+  .filter-icon {
+    position: absolute;
+    left: 8px;
+    top: 16px;
+    height: 24px;
+  }
+  
+  .filter-input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 16px 8px 16px 40px;
+    border: 2px solid black;
+    border-radius: 8px;
+    font-size: 1.15rem;
+  }
 }
 
 .city-list-container {

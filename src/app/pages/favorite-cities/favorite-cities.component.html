@@ -1,5 +1,8 @@
 <h1 class="title">Select your favorites cities</h1>
-<input #filterInput class="filter" type="text" placeholder="Type to filter by city name or country">
+<div class="filter-container">
+  <input #filterInput class="filter-input" type="text" placeholder="Type to filter by city name or country">
+  <img class="filter-icon" src="/assets/icons/filter-solid.svg" alt="Filter icon" />
+</div>
 <ul class="city-list-container">
   <li class="city-list-item" *ngFor="let city of cityListView">
     <app-city-item [city]="city" (updateFavoriteStatus)="updateFavoriteStatus($event, city)"></app-city-item>
