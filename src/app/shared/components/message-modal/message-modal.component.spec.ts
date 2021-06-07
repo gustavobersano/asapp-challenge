@@ -22,4 +22,13 @@ describe('MessageModalComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should hide modal when the user does click on background', () => {
+    let onHideSpy = spyOn(component.messageModalService, 'hide');
+    let background = fixture.debugElement.nativeElement.querySelector('.modal-background');
+    
+    background.click();
+
+    expect(onHideSpy).toHaveBeenCalled();
+  });
 });

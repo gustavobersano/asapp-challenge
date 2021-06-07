@@ -3,10 +3,30 @@ import { TestBed } from '@angular/core/testing';
 import { LoaderService } from './loader.service';
 
 describe('LoaderService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+  let service: LoaderService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    service = TestBed.inject(LoaderService);
+  });
 
   it('should be created', () => {
-    const service: LoaderService = TestBed.get(LoaderService);
     expect(service).toBeTruthy();
+  });
+
+  it('should trigger true when "show" method is called', () => {
+    let onShowSpy = spyOn(service['subject'], 'next');
+
+    service.show();
+
+    expect(onShowSpy).toHaveBeenCalledWith(true);
+  });
+
+  it('should trigger false when "hide" method is called', () => {
+    let onShowSpy = spyOn(service['subject'], 'next');
+
+    service.hide();
+
+    expect(onShowSpy).toHaveBeenCalledWith(false);
   });
 });
