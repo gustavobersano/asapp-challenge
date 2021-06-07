@@ -11,26 +11,30 @@ export class MessageModalService {
   public isModalMessageVisible$: Observable<boolean>;
 
   public title: string;
-
-  public body: string;
-
+ 
+  public fisrtParagraph: string;
+  
+  public secondParagraph: string;
 
   constructor() { 
     this.title = '';
-    this.body = '';
+    this.fisrtParagraph = '';
+    this.secondParagraph = '';
     this.subject = new BehaviorSubject(false);
     this.isModalMessageVisible$ = this.subject.asObservable();
   }
 
-  public show(title: string, body: string) {
+  public show(title: string, fisrtParagraph: string, secondParagraph: string) {
     this.title = title;
-    this.body = body;
+    this.fisrtParagraph = fisrtParagraph;
+    this.secondParagraph = secondParagraph;
     this.subject.next(true);
   }
 
   public hide() {
     this.subject.next(false);
     this.title = '';
-    this.body = '';
+    this.fisrtParagraph = '';
+    this.secondParagraph = '';
   }
 }

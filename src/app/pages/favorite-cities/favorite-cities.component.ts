@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { fromEvent, Observable } from 'rxjs';
+import { fromEvent, Observable, of } from 'rxjs';
 import {
+  catchError,
   debounceTime,
   distinctUntilChanged,
   map,
@@ -13,6 +14,9 @@ import { CityService } from 'src/app/shared/services/city.service';
 import { MessageModalService } from 'src/app/shared/components/message-modal/message-modal.service';
 
 import { CityInfoView } from 'src/app/shared/models/city-info-view';
+import { NavigationLinks } from 'src/app/shared/models/navigation-links';
+import { PaginatorOperationCodeConstants } from 'src/app/shared/constants/pagination-operation-code-constants';
+import { CityInfo } from 'src/app/shared/models/city-info';
 
 @Component({
   selector: 'app-favorite-cities',
@@ -32,6 +36,10 @@ export class FavoriteCitiesComponent implements OnInit, AfterViewInit {
 
   public preferredCityList: Array<number>;
 
+  public navigationLinks: NavigationLinks;
+
+  public total: number;
+
   constructor(
     private cityService: CityService,
     private messageModalService: MessageModalService) {
@@ -44,15 +52,16 @@ export class FavoriteCitiesComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.cityService.getPreferredCities().pipe(
-      tap(preferredCityResponse => { this.preferredCityList = preferredCityResponse.data; }),
+      tap(preferredCityListResponse => { this.preferredCityList = preferredCityListResponse.data; }),
+      catchError(error => {
+        this.messageModalService.show(error.error.error, error.error.message, 'It was not possible to get your favorite cities.');
+        return of(null);
+      }),
       mergeMap(() => this.getCityList(''))
     ).subscribe(
-      cityListView => { this.cityListView = cityListView; },
-      error => {
-        this.messageModalService.show(error.error.error, error.error.message);
-      }
+      cityListView => { this.cityListView = cityListView; }
     );
-    
+
   }
 
   ngAfterViewInit(): void {
@@ -63,23 +72,59 @@ export class FavoriteCitiesComponent implements OnInit, AfterViewInit {
         distinctUntilChanged(),
         switchMap(filterValue => this.getCityList(filterValue))
       ).subscribe(
-        res => this.cityListView = res,
-        error => {
-          this.messageModalService.show(error.error.error, error.error.message);
-        }
+        res => this.cityListView = res
       );
   }
 
   getCityList(filterValue: string = ''): Observable<Array<CityInfoView>> {
     return this.cityService.getCityList(filterValue, this.limit, this.offset).pipe(
+      tap(cityListResponse => {
+        this.total = cityListResponse.total;
+        this.navigationLinks = cityListResponse.links;
+      }),
+      map(cityListResponse => cityListResponse.data),
       map(
-        cityList => cityList.data.map(
-          city => {
-            return { ...city, checked: !!this.preferredCityList.find(preferedCity => preferedCity === city.geonameid) }
-          }
-        )
-      )
+        this.markFavoriteCities
+      ),
+      catchError(error => {
+        this.messageModalService.show(error.error.error, error.error.message, 'It was not possible to get the list of cities.');
+        return of([]);
+      })
     );
+  }
+
+  onClickButton(event: string) {
+    const paginatorPaths = {
+      [PaginatorOperationCodeConstants.FIRST]: this.navigationLinks.first,
+      [PaginatorOperationCodeConstants.PREV]: this.navigationLinks.prev,
+      [PaginatorOperationCodeConstants.NEXT]: this.navigationLinks.next,
+      [PaginatorOperationCodeConstants.LAST]: this.navigationLinks.last
+    };
+
+    this.cityService.getCityListByPage(paginatorPaths[event]).pipe(
+      tap(cityListResponse => {
+        this.total = cityListResponse.total;
+        this.navigationLinks = cityListResponse.links;
+      }),
+      map(cityListResponse => cityListResponse.data),
+      map(
+        this.markFavoriteCities
+      ),
+      catchError(error => {
+        this.messageModalService.show(error.error.error, error.error.message, 'It was not possible to get the page with the list of cities.');
+        return of(this.cityListView);
+      })
+    ).subscribe(
+      res => this.cityListView = res
+    );
+  }
+
+  markFavoriteCities = (cityList: Array<CityInfo>): Array<CityInfoView> => {
+    return cityList.map(
+      city => {
+        return { ...city, checked: !!this.preferredCityList.find(preferedCity => preferedCity === city.geonameid) }
+      }
+    )
   }
 
 }
