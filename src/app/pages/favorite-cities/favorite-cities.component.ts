@@ -4,6 +4,7 @@ import {
   catchError,
   debounceTime,
   distinctUntilChanged,
+  finalize,
   map,
   mergeMap,
   switchMap,
@@ -12,11 +13,13 @@ import {
 
 import { CityService } from 'src/app/shared/services/city.service';
 import { MessageModalService } from 'src/app/shared/components/message-modal/message-modal.service';
+import { LoaderService } from 'src/app/shared/components/loader/loader.service';
 
 import { CityInfoView } from 'src/app/shared/models/city-info-view';
 import { NavigationLinks } from 'src/app/shared/models/navigation-links';
-import { PaginatorOperationCodeConstants } from 'src/app/shared/constants/pagination-operation-code-constants';
 import { CityInfo } from 'src/app/shared/models/city-info';
+
+import { PaginatorOperationCodeConstants } from 'src/app/shared/constants/pagination-operation-code-constants';
 
 @Component({
   selector: 'app-favorite-cities',
@@ -40,9 +43,12 @@ export class FavoriteCitiesComponent implements OnInit, AfterViewInit {
 
   public total: number;
 
+  public isLoading: boolean;
+
   constructor(
     private cityService: CityService,
-    private messageModalService: MessageModalService) {
+    private messageModalService: MessageModalService,
+    public loaderService: LoaderService) {
     this.limit = 10;
     this.offset = 0;
     this.filter = '';
@@ -51,6 +57,7 @@ export class FavoriteCitiesComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.loaderService.show();
     this.cityService.getPreferredCities().pipe(
       tap(preferredCityListResponse => { this.preferredCityList = preferredCityListResponse.data; }),
       catchError(error => {
@@ -70,6 +77,7 @@ export class FavoriteCitiesComponent implements OnInit, AfterViewInit {
         map(event => event.target.value),
         debounceTime(400),
         distinctUntilChanged(),
+        tap(() => this.loaderService.show()),
         switchMap(filterValue => this.getCityList(filterValue))
       ).subscribe(
         res => this.cityListView = res
@@ -89,7 +97,8 @@ export class FavoriteCitiesComponent implements OnInit, AfterViewInit {
       catchError(error => {
         this.messageModalService.show(error.error.error, error.error.message, 'It was not possible to get the list of cities.');
         return of([]);
-      })
+      }),
+      finalize(() => this.loaderService.hide())
     );
   }
 
@@ -100,7 +109,7 @@ export class FavoriteCitiesComponent implements OnInit, AfterViewInit {
       [PaginatorOperationCodeConstants.NEXT]: this.navigationLinks.next,
       [PaginatorOperationCodeConstants.LAST]: this.navigationLinks.last
     };
-
+    this.loaderService.show();
     this.cityService.getCityListByPage(paginatorPaths[event]).pipe(
       tap(cityListResponse => {
         this.total = cityListResponse.total;
@@ -113,7 +122,8 @@ export class FavoriteCitiesComponent implements OnInit, AfterViewInit {
       catchError(error => {
         this.messageModalService.show(error.error.error, error.error.message, 'It was not possible to get the page with the list of cities.');
         return of(this.cityListView);
-      })
+      }),
+      finalize(() => this.loaderService.hide())
     ).subscribe(
       res => this.cityListView = res
     );
@@ -125,6 +135,17 @@ export class FavoriteCitiesComponent implements OnInit, AfterViewInit {
         return { ...city, checked: !!this.preferredCityList.find(preferedCity => preferedCity === city.geonameid) }
       }
     )
+  }
+
+  updateFavoriteStatus(status: boolean, city: CityInfoView) {
+    if (status) {
+      this.preferredCityList.push(city.geonameid);
+    } else {
+      const index = this.preferredCityList.findIndex(e => e === city.geonameid);
+      if (index > -1) {
+        this.preferredCityList.splice(index, 1);
+      }
+    }
   }
 
 }
