@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { CityItemComponent } from './components/city-item/city-item.component';
 import { MessageModalComponent } from './components/message-modal/message-modal.component';
 import { PaginatorComponent } from './components/paginator/paginator.component';
+import { LoaderComponent } from './components/loader/loader.component';
 
 
 
@@ -12,7 +13,8 @@ import { PaginatorComponent } from './components/paginator/paginator.component';
   declarations: [
     CityItemComponent,
     MessageModalComponent,
-    PaginatorComponent
+    PaginatorComponent,
+    LoaderComponent
   ],
   imports: [
     CommonModule,
@@ -22,6 +24,7 @@ import { PaginatorComponent } from './components/paginator/paginator.component';
     CityItemComponent,
     MessageModalComponent,
     PaginatorComponent,
+    LoaderComponent,
     FormsModule
   ]
 })
