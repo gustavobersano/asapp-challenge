@@ -22,9 +22,10 @@ export class CityItemComponent {
   onChange(city: CityInfoView): void {
     this.cityService.patchFavoriteCity(city).pipe(
       catchError( error => {
+        const status = city.checked? 'favorite' : 'not favorite';
         city.checked = !city.checked;
-        this.messageModalService.show(error.error.error, error.error.message);
-        return of(error);
+        this.messageModalService.show(error.error.error, error.error.message, `It was not possible to mark "${this.city.name} - ${this.city.country}" as ${status}.`);
+        return of(null);
       })
     ).subscribe();
   }

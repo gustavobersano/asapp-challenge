@@ -6,3 +6,4 @@
   </li>
   <li class="no-items" *ngIf="cityListView.length === 0">No data matching the filter "{{filterInput.value}}"</li>
 </ul>
+<app-paginator [navigationLinks]="navigationLinks" [total]="total" (onClickButton)="onClickButton($event)"></app-paginator>
