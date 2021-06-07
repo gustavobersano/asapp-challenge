@@ -9,7 +9,7 @@ import { MessageModalService } from './message-modal.service';
 export class MessageModalComponent {
 
   constructor(public messageModalService: MessageModalService) { }
-
+   
   close(): void {
     this.messageModalService.hide();
   }

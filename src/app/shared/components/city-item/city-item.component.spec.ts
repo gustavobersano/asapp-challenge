@@ -59,7 +59,7 @@ describe('CityItemComponent', () => {
   it('should call patchFavoriteCity when the user does click on checkbox and marked it as favorite', inject(
     [CityService], (cityService: CityService) => {
       spyOn(cityService, 'patchFavoriteCity').and.callThrough();
-      let checkbox = fixture.debugElement.nativeElement.querySelector('#checkbox');
+      let checkbox = fixture.debugElement.nativeElement.querySelector('.city-checkbox');
       let event = document.createEvent("HTMLEvents");
       event.initEvent('change', false, true);
       checkbox.checked = true;
@@ -73,7 +73,7 @@ describe('CityItemComponent', () => {
   it('should call patchFavoriteCity when the user does click on checkbox and marked it as not favorite', inject(
     [CityService], (cityService: CityService) => {
       spyOn(cityService, 'patchFavoriteCity').and.callThrough();
-      let checkbox = fixture.debugElement.nativeElement.querySelector('#checkbox');
+      let checkbox = fixture.debugElement.nativeElement.querySelector('.city-checkbox');
       let event = document.createEvent("HTMLEvents");
       event.initEvent('change', false, true);
       checkbox.checked = false;
@@ -93,7 +93,7 @@ describe('CityItemComponent', () => {
       }
       spyOn(cityService, 'patchFavoriteCity').and.returnValue(throwError(mockError));
       spyOn(messageModalService, 'show').and.callThrough();
-      let checkbox = fixture.debugElement.nativeElement.querySelector('#checkbox');
+      let checkbox = fixture.debugElement.nativeElement.querySelector('.city-checkbox');
       let event = document.createEvent("HTMLEvents");
       event.initEvent('change', false, true);
       

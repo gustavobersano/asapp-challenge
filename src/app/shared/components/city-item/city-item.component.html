@@ -1,7 +1,7 @@
 <div class="city-row">
-  <input id="checkbox" type="checkbox" class="city-checkbox" [(ngModel)]="city.checked" (change)="onChange(city)">
+  <input type="checkbox" class="city-checkbox" aria-label="checkbox" [(ngModel)]="city.checked" (change)="onChange(city)">
   <div>
-    <h3 class="name">{{ city.name }}</h3>
+    <h1 class="name">{{ city.name }}</h1>
     <p class="country" [innerText]="city.subcountry? city.subcountry + ' - ' + city.country : city.country"></p>
   </div>
 </div>
