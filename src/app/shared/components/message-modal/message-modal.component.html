@@ -1,0 +1,11 @@
+<div class="modal-content" role="dialog" aria-label="Message modal">
+  <h1 class="title">{{ messageModalService.title }}</h1>
+  <div class="body">
+    <p>{{ messageModalService.fisrtParagraph }}</p>
+    <p>{{ messageModalService.secondParagraph }}</p>
+  </div>
+  <button class="close-button" title="Close button" (click)="close()">
+    <img class="close-icon" src="/assets/icons/times-solid.svg" alt="Filter icon"/>
+  </button>
+</div>
+<div class="modal-background" (click)="close()"></div>
