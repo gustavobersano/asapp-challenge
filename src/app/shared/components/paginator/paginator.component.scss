@@ -1,12 +1,14 @@
 .paginator {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
 
   .total {
-    margin-right: .5rem;
+    margin: 0 8px 0 0;
   }
   
   .btn {
+    height: 2rem;
 
     &:disabled {
       opacity: 0.65;

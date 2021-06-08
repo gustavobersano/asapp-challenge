@@ -1,5 +1,5 @@
 <div class="paginator" *ngIf="total">
-  <p class="total">Total matches: <b>{{ total }}</b></p>
+  <p class="total">Total: <b>{{ total }}</b></p>
   <button id='first' class="btn first" [disabled]="!navigationLinks.first || !navigationLinks.prev" title="First page button"
     (click)="onClick(paginatorOperationCodeConstants.FIRST)">
     <img src="/assets/icons/angle-double-left-solid.svg" alt="First page button" />
