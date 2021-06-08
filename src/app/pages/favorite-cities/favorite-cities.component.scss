@@ -1,36 +1,41 @@
+@import 'src/assets/styles/variables.scss';
+
 .title {
   padding: 1rem 0;
   margin: 0;
   text-align: center;
+  font-size: 1.3rem;
 }
 
 .filter-container {
   position: relative;
-  
+
   .filter-icon {
     position: absolute;
     left: 8px;
     top: 16px;
     height: 24px;
   }
-  
+
   .filter-input {
     box-sizing: border-box;
     width: 100%;
     padding: 16px 8px 16px 40px;
     border: 2px solid black;
     border-radius: 8px;
-    font-size: 1.15rem;
+    font-size: .8rem;
   }
 }
 
 .city-list-container {
   position: relative;
   min-height: 50%;
+  max-height: calc(100% - 159px);
   padding: 0;
   margin-bottom: 1px;
   border: 1px solid black;
   border-radius: 8px;
+  overflow: auto;
   list-style-type: none;
 
   :not(:last-child).city-list-item {
@@ -39,5 +44,29 @@
 
   .no-items {
     padding: 16px;
+  }
+}
+
+@media (min-width: $breakpoint-small-mobile) {
+  .filter-container {
+    .filter-input {
+      font-size: 1rem;
+    }
+  }
+}
+
+@media (min-width: $breakpoint-mobile) {
+  .title {
+    font-size: 2rem;
+  }
+
+  .filter-container {
+    .filter-input {
+      font-size: 1.15rem;
+    }
+  }
+
+  .city-list-container {
+    max-height: calc(100% - 168px);
   }
 }
