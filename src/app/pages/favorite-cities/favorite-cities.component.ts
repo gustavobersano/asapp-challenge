@@ -49,7 +49,7 @@ export class FavoriteCitiesComponent implements OnInit, AfterViewInit {
     private cityService: CityService,
     private messageModalService: MessageModalService,
     public loaderService: LoaderService) {
-    this.limit = 10;
+    this.limit = 15;
     this.offset = 0;
     this.filter = '';
     this.cityListView = [];
