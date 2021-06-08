@@ -84,7 +84,7 @@ describe('CityItemComponent', () => {
       expect(cityService.patchFavoriteCity).toHaveBeenCalledWith(cityParam);
     }));
 
-  it('should not update checkbox when "patchFavoriteCity" API fail', inject(
+  it('should not update checkbox as checked when "patchFavoriteCity" API fail', inject(
     [CityService, MessageModalService], (cityService: CityService, messageModalService: MessageModalService) => {
       const mockError = {
         error: "Internal Server Error",
@@ -104,5 +104,27 @@ describe('CityItemComponent', () => {
       expect(messageModalService.show).toHaveBeenCalled();
       expect(component.city.checked).toBeFalse();
     }));
+
+    it('should not update checkbox as unchecked when "patchFavoriteCity" API fail', inject(
+      [CityService, MessageModalService], (cityService: CityService, messageModalService: MessageModalService) => {
+        const mockError = {
+          error: "Internal Server Error",
+          message: "There is a glitch in the Matrix!",
+          statusCode: 500
+        }
+        spyOn(cityService, 'patchFavoriteCity').and.returnValue(throwError(mockError));
+        spyOn(messageModalService, 'show').and.callThrough();
+        let checkbox = fixture.debugElement.nativeElement.querySelector('.city-checkbox');
+        let event = document.createEvent("HTMLEvents");
+        event.initEvent('change', false, true);
+        component.city.checked = true;
+        
+        checkbox.checked = false;
+        checkbox.dispatchEvent(event);
+  
+        expect(cityService.patchFavoriteCity).toHaveBeenCalled();
+        expect(messageModalService.show).toHaveBeenCalled();
+        expect(component.city.checked).toBeTrue();
+      }));
 });
 

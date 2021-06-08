@@ -27,23 +27,26 @@
   }
 }
 
-.city-list-container {
+.wrapper-container {
   position: relative;
-  min-height: 50%;
-  max-height: calc(100% - 159px);
-  padding: 0;
-  margin-bottom: 1px;
-  border: 1px solid black;
-  border-radius: 8px;
-  overflow: auto;
-  list-style-type: none;
+  height: calc(100% - 161px);
 
-  :not(:last-child).city-list-item {
-    border-bottom: 1px solid gray;
-  }
+  .city-list-container {
+    height: 100%;
+    padding: 0;
+    margin-bottom: 1px;
+    border: 1px solid black;
+    border-radius: 8px;
+    overflow: auto;
+    list-style-type: none;
 
-  .no-items {
-    padding: 16px;
+    :not(:last-child).city-list-item {
+      border-bottom: 1px solid gray;
+    }
+
+    .no-items {
+      padding: 16px;
+    }
   }
 }
 
@@ -52,6 +55,10 @@
     .filter-input {
       font-size: 1rem;
     }
+  }
+
+  .wrapper-container {
+    height: calc(100% - 164px);
   }
 }
 
@@ -66,7 +73,7 @@
     }
   }
 
-  .city-list-container {
-    max-height: calc(100% - 168px);
+  .wrapper-container {
+    height: calc(100% - 181px);
   }
 }

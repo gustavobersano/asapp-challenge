@@ -21,7 +21,7 @@ export class PaginatorComponent {
 
   constructor() { }
 
-  onClick(operationCode: string) {
+  onClick(operationCode: string): void {
     this.onClickButton.next(operationCode);
   }
 

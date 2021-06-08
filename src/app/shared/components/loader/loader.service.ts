@@ -15,11 +15,11 @@ export class LoaderService {
     this.isLoading$ = this.subject.asObservable();
   }
 
-  public show() {
+  public show(): void {
     this.subject.next(true);
   }
 
-  public hide() {
+  public hide(): void {
     this.subject.next(false);
   }
 

@@ -61,7 +61,7 @@ export class FavoriteCitiesComponent implements OnInit, AfterViewInit {
     this.cityService.getPreferredCities().pipe(
       tap(preferredCityListResponse => { this.preferredCityList = preferredCityListResponse.data; }),
       catchError(error => {
-        this.messageModalService.show(error.error.error, error.error.message, 'It was not possible to get your favorite cities.');
+        this.messageModalService.show(error.error.error, error.error.message, 'It was not possible to get your favorite cities. Please refresh the page.');
         return of(null);
       }),
       mergeMap(() => this.getCityList(''))
@@ -102,7 +102,7 @@ export class FavoriteCitiesComponent implements OnInit, AfterViewInit {
     );
   }
 
-  onClickButton(event: string) {
+  onClickButton(event: string): void {
     const paginatorPaths = {
       [PaginatorOperationCodeConstants.FIRST]: this.navigationLinks.first,
       [PaginatorOperationCodeConstants.PREV]: this.navigationLinks.prev,
@@ -137,7 +137,7 @@ export class FavoriteCitiesComponent implements OnInit, AfterViewInit {
     )
   }
 
-  updateFavoriteStatus(status: boolean, city: CityInfoView) {
+  updateFavoriteStatus(status: boolean, city: CityInfoView): void {
     if (status) {
       this.preferredCityList.push(city.geonameid);
     } else {
