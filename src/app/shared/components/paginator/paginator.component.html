@@ -1,0 +1,19 @@
+<div class="paginator" *ngIf="total">
+  <p class="total">Total: <b>{{ total }}</b></p>
+  <button id='first' class="btn first" [disabled]="!navigationLinks.first || !navigationLinks.prev" title="First page button"
+    (click)="onClick(paginatorOperationCodeConstants.FIRST)">
+    <img src="/assets/icons/angle-double-left-solid.svg" alt="First page button" />
+  </button>
+  <button id='prev' class="btn" [disabled]="!navigationLinks.prev" title="Previous page button"
+    (click)="onClick(paginatorOperationCodeConstants.PREV)">
+    <img src="/assets/icons/angle-left-solid.svg" alt="Previous page button" />
+  </button>
+  <button id='next' class="btn" [disabled]="!navigationLinks.next" title="Next page button"
+    (click)="onClick(paginatorOperationCodeConstants.NEXT)">
+    <img src="/assets/icons/angle-right-solid.svg" alt="Next page button" />
+  </button>
+  <button id='last' class="btn last" [disabled]="!navigationLinks.last || !navigationLinks.next" title="Last page button"
+    (click)="onClick(paginatorOperationCodeConstants.LAST)">
+    <img src="/assets/icons/angle-double-right-solid.svg" alt="Last page button" />
+  </button>
+</div>

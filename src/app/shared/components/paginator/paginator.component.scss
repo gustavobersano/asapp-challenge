@@ -1,0 +1,44 @@
+.paginator {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  .total {
+    margin: 0 8px 0 0;
+  }
+  
+  .btn {
+    height: 2rem;
+
+    &:disabled {
+      opacity: 0.65;
+    }
+
+    &:enabled {
+      cursor: pointer;
+
+      &:hover {
+        background-color: gray;
+      }
+    }
+
+    &.first {
+      border-bottom-left-radius: 8px;
+      border-top-left-radius: 8px;
+    }
+
+    &.last {
+      border-bottom-right-radius: 8px;
+      border-top-right-radius: 8px;
+    }
+
+    img {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  .btn:disabled {
+    opacity: 0.65;
+  }
+}

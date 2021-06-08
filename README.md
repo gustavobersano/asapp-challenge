@@ -1,14 +1,10 @@
 # AsappChallenge
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.1.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version **8.2** and updated to version **11**.
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Run `npm run start` or `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Build
 
@@ -16,12 +12,30 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 ## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run `npm run test` to execute the unit tests with coverage.
+Currently, the project has **100% coverage**.
 
-## Running end-to-end tests
+## Responsive
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+It has been taken into consideration screens of more than 320px width.
 
-## Further help
+## Accessibility analysis
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+All screen were checked with [Axe DevTools](https://www.deque.com/axe/devtools/).
+
+## Usability Issues
+
+- The user can not see all preferred cities at once. He has to filter and search to remember.
+- The filter input placeholder is too long for mobile view.
+
+## UI proposal
+
+### Main proposal
+- Use chips to show all preferred cities previously selected, inside the same input or above. [Example](https://user-images.githubusercontent.com/2288896/72023940-2c426300-3242-11ea-9b0d-7e77fd154602.png)
+- With the chips approach, a better way is to remove the checkboxes and become whole the rows selectable.
+
+### Nice to have:
+- More options to pagination control like:
+  - Set item number per page
+  - Total number of pages and current page
+  - Select a page number
