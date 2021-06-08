@@ -11,6 +11,8 @@ import { LoaderComponent } from 'src/app/shared/components/loader/loader.compone
 
 import { CityListResponse } from 'src/app/shared/models/city-list-response';
 import { PreferredCityListResponse } from 'src/app/shared/models/preferred-city-list-response';
+import { CityInfoView } from 'src/app/shared/models/city-info-view';
+
 import { PaginatorOperationCodeConstants } from 'src/app/shared/constants/pagination-operation-code-constants';
 
 class MockCityService {
@@ -24,7 +26,7 @@ class MockCityService {
       }
     })
   }
-  getCityList(): Observable<CityListResponse> {
+  getCityList(filter?: string): Observable<CityListResponse> {
     return of({
       'data': [
         { 'country': 'Jordan', 'geonameid': 250799, 'name': '‘Ajlūn', 'subcountry': 'Ajlun' },
@@ -197,6 +199,15 @@ describe('FavoriteCitiesComponent', () => {
     component.updateFavoriteStatus(false, component.cityListView[0]);
 
     expect(component.preferredCityList.findIndex(preferredCity => preferredCity === component.cityListView[0].geonameid)).toEqual(-1);
+  });
+
+  it('should keep preferred cities without changes when "updateFavoriteStatus" method is called to mark a non preferred city as not favorite', () => {
+    const mockCity: CityInfoView = { 'country': 'Any country', 'geonameid': 9999999, 'name': 'Any city', 'subcountry': 'Any subcountry', checked: false };
+    const amountPreferredCities = component.preferredCityList.length;
+    
+    component.updateFavoriteStatus(false, mockCity);
+
+    expect(component.preferredCityList.length).toEqual(amountPreferredCities);
   });
 
   it('should call getCityList API when user change filter input value', fakeAsync( inject(

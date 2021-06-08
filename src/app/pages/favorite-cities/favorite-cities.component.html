@@ -3,11 +3,16 @@
   <input #filterInput class="filter-input" type="text" placeholder="Type to filter by city name or country">
   <img class="filter-icon" src="/assets/icons/filter-solid.svg" alt="Filter icon" />
 </div>
-<ul class="city-list-container">
-  <li class="city-list-item" *ngFor="let city of cityListView">
-    <app-city-item [city]="city" (updateFavoriteStatus)="updateFavoriteStatus($event, city)"></app-city-item>
-  </li>
-  <li *ngIf="!(loaderService.isLoading$ | async) && cityListView.length === 0" class="no-items">No data matching the filter "{{filterInput.value}}"</li>
+<div class="wrapper-container">
+  <ul class="city-list-container">
+    <li *ngFor="let city of cityListView" class="city-list-item">
+      <app-city-item [city]="city" (updateFavoriteStatus)="updateFavoriteStatus($event, city)"></app-city-item>
+    </li>
+    <li *ngIf="!(loaderService.isLoading$ | async) && cityListView.length === 0" class="no-items">
+      No data matching for filter "{{filterInput.value}}"
+    </li>
+  </ul>
   <app-loader *ngIf="(loaderService.isLoading$ | async)"></app-loader>
-</ul>
-<app-paginator [navigationLinks]="navigationLinks" [total]="total" (onClickButton)="onClickButton($event)"></app-paginator>
+</div>
+<app-paginator [navigationLinks]="navigationLinks" [total]="total" (onClickButton)="onClickButton($event)">
+</app-paginator>

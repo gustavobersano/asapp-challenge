@@ -17,22 +17,24 @@ export class MessageModalService {
   public secondParagraph: string;
 
   constructor() { 
-    this.title = '';
-    this.fisrtParagraph = '';
-    this.secondParagraph = '';
+    this.initContent();
     this.subject = new BehaviorSubject(false);
     this.isModalMessageVisible$ = this.subject.asObservable();
   }
 
-  public show(title: string, fisrtParagraph: string, secondParagraph: string) {
+  public show(title: string, fisrtParagraph: string, secondParagraph: string): void {
     this.title = title;
     this.fisrtParagraph = fisrtParagraph;
     this.secondParagraph = secondParagraph;
     this.subject.next(true);
   }
 
-  public hide() {
+  public hide(): void {
     this.subject.next(false);
+    this.initContent();
+  }
+
+  private initContent(): void {
     this.title = '';
     this.fisrtParagraph = '';
     this.secondParagraph = '';
